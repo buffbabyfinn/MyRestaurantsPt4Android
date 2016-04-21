@@ -10,25 +10,37 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.restaurantButton) Button mRestaurantButton;
+    @Bind(R.id.aboutButton) Button mAboutButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            ButterKnife.bind(this);
 
-        mRestaurantButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String location = mLocationEditText.getText().toString();
-                Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
-                intent.putExtra("location", location);
-                startActivity(intent);
+            mRestaurantButton.setOnClickListener(this);
+            mAboutButton.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.restaurantButton:
+                    String location = mLocationEditText.getText().toString();
+                    Intent intent = new Intent(MainActivity.this, RestaurantsActivity.class);
+                    intent.putExtra("location", location);
+                    startActivity(intent);
+                    break;
+                case R.id.aboutButton:
+                    Intent intention = new Intent(MainActivity.this, AboutActivity.class);
+                    startActivity(intention);
+                    break;
+                default:
+                    break;
             }
-        });
-    }
+        }
 }
