@@ -2,7 +2,7 @@ package com.epicodus.myrestaurantsv2;
 
 import android.widget.TextView;
 
-import junit.framework.Assert;
+import com.epicodus.myrestaurantsv2.ui.MainActivity;
 
 import org.junit.Before;
 import org.junit.Test;

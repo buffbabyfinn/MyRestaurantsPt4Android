@@ -1,7 +1,9 @@
-package com.epicodus.myrestaurantsv2;
+package com.epicodus.myrestaurantsv2.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.epicodus.myrestaurantsv2.R;
 
 public class AboutActivity extends AppCompatActivity {
 
