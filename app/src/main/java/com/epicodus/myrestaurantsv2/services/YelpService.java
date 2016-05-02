@@ -60,7 +60,7 @@ public class YelpService {
                 for (int i = 0; i < businessesJSON.length(); i++) {
                     JSONObject restaurantJSON = businessesJSON.getJSONObject(i);
                     String name = restaurantJSON.getString("name");
-                    String phone = restaurantJSON.getString("display_phone");
+                    String phone = restaurantJSON.optString("display_phone", "Phone not available");
                     String website = restaurantJSON.getString("url");
                     double rating = restaurantJSON.getDouble("rating");
                     String imageUrl = restaurantJSON.getString("image_url");
