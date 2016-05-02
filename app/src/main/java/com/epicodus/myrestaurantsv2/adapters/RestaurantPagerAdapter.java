@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.epicodus.myrestaurantsv2.R;
 import com.epicodus.myrestaurantsv2.models.Restaurant;
 import com.epicodus.myrestaurantsv2.ui.RestaurantDetailFragment;
 
