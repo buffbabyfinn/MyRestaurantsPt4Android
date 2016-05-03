@@ -7,14 +7,16 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorBackground"
     tools:context=".ui.MainActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
         android:src="@drawable/tables"
         android:scaleType="centerCrop"
+        android:alpha=".75"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -26,9 +28,17 @@
         android:text="MyRestaurants"
         android:textColor="@color/colorPrimaryText"
         android:id="@+id/appNameTextView"
+        android:textSize="40sp"
+        android:typeface="serif"
+        android:textStyle="bold"
+        android:visibility="visible"
+        android:textAlignment="center"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="40sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="124dp"
+        android:layout_alignRight="@+id/imageView"
+        android:layout_alignEnd="@+id/imageView" />
 
     <Button
         android:layout_width="match_parent"
@@ -39,9 +49,9 @@
         android:textColor="@color/colorTextIcons"
         android:visibility="visible"
         android:layout_above="@+id/savedRestaurantsButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="10dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:layout_width="match_parent"
@@ -51,22 +61,10 @@
         android:background="@color/colorAccent"
         android:textColor="@color/colorTextIcons"
         android:visibility="visible"
-        android:layout_below="aboutButton"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/aboutButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationEditText"
-        android:padding="10dp"
-        android:hint="Enter Zip Code"
-        android:background="@color/colorTextBackground"
-        android:textColor="@color/colorPrimaryText"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:layout_width="match_parent"
@@ -76,9 +74,6 @@
         android:background="@color/colorAccent"
         android:textColor="@color/colorTextIcons"
         android:visibility="visible"
-        android:layout_above="@id/restaurantButton"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

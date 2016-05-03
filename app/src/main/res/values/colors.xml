@@ -10,4 +10,5 @@
     <color name="colorTertiaryText">#FDFED1</color>
     <color name="colorDivider">#437F7D</color>
     <color name="colorTextBackground">#FFE7BA</color>
+    <color name="colorBackground">#BFBFBF</color>
 </resources>
