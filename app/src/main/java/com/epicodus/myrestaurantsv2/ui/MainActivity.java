@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.restaurantButton) Button mRestaurantButton;
     @Bind(R.id.aboutButton) Button mAboutButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
+    @Bind(R.id.savedRestaurantsButton) Button mSavedRestaurantsButton;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mSearchedLocationRef = new Firebase(Constants.FIREBASE_URL_SEARCHED_LOCATION);
             mRestaurantButton.setOnClickListener(this);
             mAboutButton.setOnClickListener(this);
+            mSavedRestaurantsButton.setOnClickListener(this);
+
 
             mSearchedLocationRefListener = mSearchedLocationRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -79,9 +82,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(intent);
                     break;
                 case R.id.aboutButton:
-                    Intent intention = new Intent(MainActivity.this, AboutActivity.class);
-                    startActivity(intention);
+                    Intent aboutIntent = new Intent(MainActivity.this, AboutActivity.class);
+                    startActivity(aboutIntent);
                     break;
+                case R.id.savedRestaurantsButton:
+                    Intent saveIntent = new Intent(MainActivity.this, SavedRestaurantListActivity.class);
+                    startActivity(saveIntent);
                 default:
                     break;
             }

@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import com.epicodus.myrestaurantsv2.Constants;
 import com.epicodus.myrestaurantsv2.R;
 import com.epicodus.myrestaurantsv2.models.Restaurant;
-import com.epicodus.myrestaurantsv2.util.FirebaseRestaurantListAdapter;
+import com.epicodus.myrestaurantsv2.adapters.FirebaseRestaurantListAdapter;
 import com.firebase.client.Firebase;
 import com.firebase.client.Query;
 
@@ -20,8 +20,7 @@ public class SavedRestaurantListActivity extends AppCompatActivity {
     private Firebase mFirebaseRestaurantsRef;
     private FirebaseRestaurantListAdapter mAdapter;
 
-    @Bind(R.id.recyclerView)
-    RecyclerView mRecyclerView;
+    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

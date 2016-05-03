@@ -1,4 +1,4 @@
-package com.epicodus.myrestaurantsv2.util;
+package com.epicodus.myrestaurantsv2.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import com.epicodus.myrestaurantsv2.R;
 import com.epicodus.myrestaurantsv2.adapters.RestaurantViewHolder;
 import com.epicodus.myrestaurantsv2.models.Restaurant;
+import com.epicodus.myrestaurantsv2.util.FirebaseRecyclerAdapter;
 import com.firebase.client.Query;
 
 /**
  * Created by Megan on 5/2/2016.
  */
 public class FirebaseRestaurantListAdapter extends FirebaseRecyclerAdapter<RestaurantViewHolder, Restaurant> {
+
     public FirebaseRestaurantListAdapter(Query query, Class<Restaurant> itemClass) {
         super(query, itemClass);
     }
