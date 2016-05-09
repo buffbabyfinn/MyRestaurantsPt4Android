@@ -42,10 +42,23 @@ public class SavedRestaurantListActivity extends AppCompatActivity implements On
         setUpRecyclerView();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        String uid = mSharedPreferences.getString(Constants.KEY_UID, null);
+        for (Restaurant restaurant : mAdapter.getItems()) {
+            String pushId = restaurant.getPushId();
+            restaurant.setIndex(Integer.toString(mAdapter.getItems().indexOf(restaurant)));
+            mFirebaseRestaurantsRef.child(uid)
+                    .child(pushId)
+                    .setValue(restaurant);
+        }
+    }
+
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         String location = mFirebaseRestaurantsRef.child(userUid).toString();
-        mQuery = new Firebase(location);
+        mQuery = new Firebase(location).orderByChild("index");
     }
 
     private void setUpRecyclerView() {
