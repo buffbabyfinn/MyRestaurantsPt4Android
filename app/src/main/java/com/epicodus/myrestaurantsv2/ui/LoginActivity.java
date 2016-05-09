@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,10 +43,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         mPasswordLoginButton.setOnClickListener(this);
         mRegisterTextView.setOnClickListener(this);
+
         mAuthProgressDialog = new ProgressDialog(this);
         mAuthProgressDialog.setTitle("Loading...");
         mAuthProgressDialog.setMessage("Authenticating with Firebase...");
         mAuthProgressDialog.setCancelable(false);
+        String signUpEmail = mSharedPreferences.getString(Constants.KEY_USER_EMAIL, null);
+
+        if (signUpEmail != null) {
+            mEmailEditText.setText(signUpEmail);
+        }
     }
 
     @Override
@@ -65,7 +72,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void loginWithPassword() {
-        String email = mEmailEditText.getText().toString();
+        final String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
         if(email.equals("")) {
@@ -78,11 +85,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuthProgressDialog.show();
 
         mFirebaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+
             @Override
             public void onAuthenticated(AuthData authData) {
-                mAuthProgressDialog.dismiss();
                 if(authData != null) {
+                    mAuthProgressDialog.dismiss();
                     String userUid = authData.getUid();
+                    mSharedPreferencesEditor.putString(Constants.KEY_USER_EMAIL, email).apply();
                     mSharedPreferencesEditor.putString(Constants.KEY_UID, userUid).apply();
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

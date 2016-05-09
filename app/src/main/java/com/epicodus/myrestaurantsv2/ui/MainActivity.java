@@ -12,9 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.epicodus.myrestaurantsv2.Constants;
 import com.epicodus.myrestaurantsv2.R;
+import com.epicodus.myrestaurantsv2.models.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -25,13 +27,18 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
-    private Firebase mSearchedLocationRef;
-    private ValueEventListener mSearchedLocationRefListener;
+//    private Firebase mSearchedLocationRef;
+//    private ValueEventListener mSearchedLocationRefListener;
     private Firebase mFirebaseRef;
+    private ValueEventListener mUserRefListener;
+    private String mUid;
+    private Firebase mUserRef;
+    private SharedPreferences mSharedPreferences;
 
     @Bind(R.id.restaurantButton) Button mRestaurantButton;
     @Bind(R.id.aboutButton) Button mAboutButton;
     @Bind(R.id.savedRestaurantsButton) Button mSavedRestaurantsButton;
+    @Bind(R.id.welcomeTextView) TextView mWelcomeTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutButton.setOnClickListener(this);
         mSavedRestaurantsButton.setOnClickListener(this);
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+        mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUid);
+
+        mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                Log.d("UserName ", user.getName());
+                mWelcomeTextView.setText("Welcome, " + user.getName() + ", to");
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Log.d(TAG, "Read failed");
+            }
+        });
     }
 
     @Override
