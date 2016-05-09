@@ -28,7 +28,7 @@
         <activity android:name=".ui.RestaurantDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.RestaurantListActivity" />
         </activity>
         <activity android:name=".ui.SavedRestaurantListActivity">
             <meta-data
