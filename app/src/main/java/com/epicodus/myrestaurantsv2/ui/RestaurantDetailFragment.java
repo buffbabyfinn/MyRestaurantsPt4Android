@@ -30,6 +30,8 @@ import butterknife.ButterKnife;
 public class RestaurantDetailFragment extends Fragment implements View.OnClickListener {
     private static final int MAX_WIDTH = 400;
     private static final int MAX_HEIGHT = 300;
+    private static ArrayList<Restaurant> restaurants;
+    private static Integer position;
     private SharedPreferences mSharedPreferences;
 
     @Bind(R.id.restaurantImageView) ImageView mImageLabel;
@@ -45,10 +47,13 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
     private ArrayList<Restaurant> mRestaurants;
     private Integer mPosition;
 
-    public static RestaurantDetailFragment newInstance(Restaurant restaurant) {
+    public static RestaurantDetailFragment newInstance(ArrayList<Restaurant> restaurants, Integer position) {
         RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable("restaurant", Parcels.wrap(restaurant));
+
+        args.putParcelable(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(restaurants));
+        args.putString(Constants.EXTRA_KEY_POSITION, position.toString());
+
         restaurantDetailFragment.setArguments(args);
         return restaurantDetailFragment;
     }
@@ -72,6 +77,7 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
                 .resize(MAX_WIDTH, MAX_HEIGHT)
                 .centerCrop()
                 .into(mImageLabel);
+
         mNameLabel.setText(mRestaurant.getName());
         mCategoriesLabel.setText(android.text.TextUtils.join(", ", mRestaurant.getCategories()));
         mRatingLabel.setText(Double.toString(mRestaurant.getRating()) + "/5");
@@ -116,16 +122,5 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
             default:
                 break;
         }
-    }
-
-    public static RestaurantDetailFragment newInstance(ArrayList<Restaurant> restaurants, Integer position) {
-        RestaurantDetailFragment restaurantDetailFragment = new RestaurantDetailFragment();
-        Bundle args = new Bundle();
-
-        args.putParcelable(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(restaurants));
-        args.putParcelable(Constants.EXTRA_KEY_POSITION, Parcels.wrap(position));
-
-        restaurantDetailFragment.setArguments(args);
-        return restaurantDetailFragment;
     }
 }

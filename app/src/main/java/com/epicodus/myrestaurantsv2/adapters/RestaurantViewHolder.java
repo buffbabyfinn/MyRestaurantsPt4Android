@@ -1,10 +1,10 @@
 package com.epicodus.myrestaurantsv2.adapters;
 
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -44,33 +44,43 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Ite
 
 
     public RestaurantViewHolder(View itemView, ArrayList<Restaurant> restaurants) {
+
         super(itemView);
-        // Determines the current orientation of the device:
-        mOrientation = itemView.getResources().getConfiguration().orientation;
-        // Checks if the recorded orientation matches Android's landscape configuration.
-        // if so, we create a new DetailFragment to display in our special landscape layout:
-        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            createDetailFragment(0);
-        }
         ButterKnife.bind(this, itemView);
+
         mContext = itemView.getContext();
         mRestaurants = restaurants;
+        mOrientation = itemView.getResources().getConfiguration().orientation;
+
+        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE){
+            createDetailFragment(0);
+        }
+
         itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                int itemPosition = getLayoutPosition();
-                Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
-                intent.putExtra("position", itemPosition + "");
-                intent.putExtra("restaurants", Parcels.wrap(mRestaurants));
-                mContext.startActivity(intent);
+
+                mPosition = getLayoutPosition();
+
+                if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    createDetailFragment(mPosition);
+                } else {
+                    Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY_POSITION, mPosition);
+                    intent.putExtra(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(mRestaurants));
+                    mContext.startActivity(intent);
+                }
+
             }
+
         });
+
     }
 
-    public void bindRestaurant(Restaurant restaurant) {
-        Picasso.with(mContext).load(restaurant.getImageUrl()).into(mRestaurantImageView);
 
+
+    public void bindRestaurant(Restaurant restaurant) {
         Picasso.with(mContext)
                 .load(restaurant.getImageUrl())
                 .resize(MAX_WIDTH, MAX_HEIGHT)
@@ -104,23 +114,10 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Ite
         // Creates new RestaurantDetailFragment with the given position:
         RestaurantDetailFragment detailFragment = RestaurantDetailFragment.newInstance(mRestaurants, position);
         // Gathers necessary components to replace the FrameLayout in the layout with the RestaurantDetailFragment:
-        android.support.v4.app.FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
+        FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
         //  Replaces the FrameLayout with the RestaurantDetailFragment:
         ft.replace(R.id.restaurantDetailContainer, detailFragment);
         ft.commit();
-    }
-
-    public void onClick(View v) {
-        // Determines the position of the restaurant clicked:
-        mPosition = getLayoutPosition();
-        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            createDetailFragment(mPosition);
-        } else {
-            Intent intent = new Intent(mContext, RestaurantDetailActivity.class);
-            intent.putExtra(Constants.EXTRA_KEY_POSITION, mPosition.toString());
-            intent.putExtra(Constants.EXTRA_KEY_RESTAURANTS, Parcels.wrap(mRestaurants));
-            mContext.startActivity(intent);
-        }
     }
 
 }
