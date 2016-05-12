@@ -25,15 +25,11 @@ import com.firebase.client.ValueEventListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     public static final String TAG = MainActivity.class.getSimpleName();
-//    private Firebase mSearchedLocationRef;
-//    private ValueEventListener mSearchedLocationRefListener;
-    private Firebase mFirebaseRef;
     private ValueEventListener mUserRefListener;
     private String mUid;
     private Firebase mUserRef;
-    private SharedPreferences mSharedPreferences;
 
     @Bind(R.id.restaurantButton) Button mRestaurantButton;
     @Bind(R.id.aboutButton) Button mAboutButton;
@@ -48,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mRestaurantButton.setOnClickListener(this);
         mAboutButton.setOnClickListener(this);
         mSavedRestaurantsButton.setOnClickListener(this);
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUid);
 

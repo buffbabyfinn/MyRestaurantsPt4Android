@@ -16,6 +16,7 @@ import com.epicodus.myrestaurantsv2.models.Restaurant;
 import com.epicodus.myrestaurantsv2.ui.RestaurantDetailActivity;
 import com.epicodus.myrestaurantsv2.ui.RestaurantDetailFragment;
 import com.epicodus.myrestaurantsv2.util.ItemTouchHelperViewHolder;
+import com.epicodus.myrestaurantsv2.util.OnRestaurantSelectedListener;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -41,15 +42,17 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Ite
     private ArrayList<Restaurant> mRestaurants = new ArrayList<>();
     private int mOrientation;
     private Integer mPosition;
+    private OnRestaurantSelectedListener mRestaurantSelectedListener;
 
 
-    public RestaurantViewHolder(View itemView, ArrayList<Restaurant> restaurants) {
+    public RestaurantViewHolder(View itemView, ArrayList<Restaurant> restaurants, OnRestaurantSelectedListener restaurantSelectedListener) {
 
         super(itemView);
         ButterKnife.bind(this, itemView);
 
         mContext = itemView.getContext();
         mRestaurants = restaurants;
+        mRestaurantSelectedListener = restaurantSelectedListener;
         mOrientation = itemView.getResources().getConfiguration().orientation;
 
         if (mOrientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -62,6 +65,7 @@ public class RestaurantViewHolder extends RecyclerView.ViewHolder implements Ite
             public void onClick(View v) {
 
                 mPosition = getLayoutPosition();
+                mRestaurantSelectedListener.onRestaurantSelected(mPosition, mRestaurants);
 
                 if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
                     createDetailFragment(mPosition);

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epicodus.myrestaurantsv2.BaseFragment;
 import com.epicodus.myrestaurantsv2.Constants;
 import com.epicodus.myrestaurantsv2.R;
 import com.epicodus.myrestaurantsv2.models.Restaurant;
@@ -27,12 +28,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class RestaurantDetailFragment extends Fragment implements View.OnClickListener {
+public class RestaurantDetailFragment extends BaseFragment implements View.OnClickListener {
     private static final int MAX_WIDTH = 400;
     private static final int MAX_HEIGHT = 300;
-    private static ArrayList<Restaurant> restaurants;
-    private static Integer position;
-    private SharedPreferences mSharedPreferences;
 
     @Bind(R.id.restaurantImageView) ImageView mImageLabel;
     @Bind(R.id.restaurantNameTextView) TextView mNameLabel;
@@ -63,7 +61,6 @@ public class RestaurantDetailFragment extends Fragment implements View.OnClickLi
         super.onCreate(savedInstanceState);
         mRestaurants = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_KEY_RESTAURANTS));
         mPosition = getArguments().getInt(Constants.EXTRA_KEY_POSITION);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mRestaurant = mRestaurants.get(mPosition);
     }
 
